@@ -49,14 +49,15 @@
       align-items: center;
       justify-content: center;
       padding: 24px;
+      text-align: center;
     }
     .stack {
-      text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      text-align: center;
     }
     .name {
       font-size: 48px;
@@ -64,7 +65,11 @@
       color: white;
       margin: 0;
       line-height: 1.15;
+      white-space: normal;
+      word-break: break-word;
     }
+    .caret { display:inline-block; margin-left:2px; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
     .subline, .wherewhen {
       color: var(--muted);
       font-size: 14px;
@@ -87,9 +92,9 @@
 
     <main class="main">
       <div class="stack">
-        <h1 class="name">Diego Buencamino</h1>
-        <p class="subline">software development / electronics repair and testing / tech support</p>
-        <p class="wherewhen">vancouver, bc / <span id="clock">--:--:--</span></p>
+        <h1 class="name"><span id="typed-name" data-text="Diego Buencamino" aria-label="Diego Buencamino"></span><span class="caret" aria-hidden="true">▊</span></h1>
+        <p class="subline">💻 software development / 🔧 electronics repair and testing / 🛟 tech support</p>
+        <p class="wherewhen">📍 vancouver, bc - <span id="clock">--:--:--</span></p>
       </div>
     </main>
 
@@ -106,6 +111,33 @@
   </div>
 
   <script>
+    // Typewriter effect for the name (terminal-like)
+    (function() {
+      const nameEl = document.getElementById('typed-name');
+      if (!nameEl) return;
+      const full = nameEl.dataset.text || '';
+      const caret = document.querySelector('.caret');
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function type() {
+        if (reduce) { nameEl.textContent = full; return; }
+        let i = 0;
+        const step = () => {
+          nameEl.textContent = full.slice(0, i);
+          i++;
+          if (i <= full.length) {
+            setTimeout(step, 70);
+          }
+        };
+        step();
+      }
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(type);
+      } else {
+        window.addEventListener('load', type);
+      }
+    })();
+
+    // Vancouver time updater
     (function() {
       const CLOCK_EL = document.getElementById('clock');
       const ZONE = 'America/Vancouver';
