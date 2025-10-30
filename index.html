@@ -2,134 +2,160 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>diego buencamino</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Laptop favicon (SVG data URI) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='8' y='16' width='48' height='28' rx='2' ry='2' fill='%23fff'/%3E%3Crect x='12' y='20' width='40' height='20' fill='%23000'/%3E%3Crect x='6' y='44' width='52' height='6' rx='2' ry='2' fill='%23ccc'/%3E%3C/svg%3E" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diego Buencamino</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='8' y='10' width='48' height='32' rx='4' ry='4' fill='%23000000' stroke='%234169e1' stroke-width='3'/%3E%3Crect x='6' y='46' width='52' height='8' rx='3' ry='3' fill='%23202020' stroke='%234169e1' stroke-width='3'/%3E%3C/svg%3E" />
   <style>
-    :root { --bg:#000; --fg:#fff; --muted:#9aa0a6; }
-    html, body { height: 100%; margin: 0; }
-
+    :root {
+      --accent: #4169e1;
+      --fg: #e6e6e6;
+      --muted: #a0a0a0;
+      --bg: #000000;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
+      margin: 0;
       background: var(--bg);
       color: var(--fg);
       font-family: 'JetBrains Mono', monospace;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      -webkit-text-size-adjust: 100%;
-      height: 100svh; min-height: 100svh; overflow: hidden;
-      display: flex; flex-direction: column;
-      padding-left: max(16px, env(safe-area-inset-left));
-      padding-right: max(16px, env(safe-area-inset-right));
+      letter-spacing: 0.2px;
     }
-
-    a { color: var(--fg); text-decoration: none; border-bottom: none; }
-
+    a {
+      color: var(--accent);
+      text-decoration: underline dotted;
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s ease, color 0.2s ease;
+    }
+    a:hover {
+      text-decoration: none;
+    }
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
     .source {
-      position: fixed; top: max(12px, env(safe-area-inset-top)); left: max(16px, env(safe-area-inset-left));
-      font-size: 14px; color: var(--fg); border-bottom: 1px dotted var(--fg); z-index: 10;
+      position: fixed;
+      top: 18px;
+      left: 22px;
+      font-size: 14px;
+      color: var(--muted);
     }
-
-    main.center {
-      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; gap: 4px; padding: 0 4px; min-height: 0;
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
     }
-
-    h1 { font-size: clamp(28px, 7vw, 48px); font-weight: 600; letter-spacing: .5px; margin: 0; line-height: 1.15; }
-
-    .subtitle, .location-time {
-      color: var(--muted); font-size: clamp(12px, 3.5vw, 16px); margin: 0; line-height: 1.2;
+    .stack {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
-    /* Allow subtitle to wrap on narrow screens */
-    .subtitle { white-space: normal; }
-    .location-time { white-space: nowrap; }
-    /* If wrapped, increase space only between subtitle and time */
-    .center.wrapped .subtitle { margin-bottom: 10px; }
-
-    footer { margin-top: auto; width: 100%; display: grid; place-items: center;
-      padding-bottom: calc(12px + env(safe-area-inset-bottom)); padding-top: 8px; }
-
-    .links { display: flex; gap: 24px; }
-    .links a { color: var(--fg); font-size: clamp(18px, 6vw, 22px); line-height: 1; }
-    .links a i { display: inline-block; width: 1em; height: 1em; }
-
-    @media (orientation: landscape) and (max-height: 420px) {
-      main.center { gap: 2px; }
-      .center.wrapped .subtitle { margin-bottom: 6px; }
-      footer { padding-top: 4px; }
+    .name {
+      font-size: 48px;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+      line-height: 1.15;
     }
+    .subline, .wherewhen {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+      opacity: 0.92;
+    }
+    .footer {
+      text-align: center;
+      padding: 28px 16px 40px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .links { margin-top: 10px; }
+    .links a { margin: 0 8px; }
   </style>
 </head>
 <body>
-  <a class="source" href="https://github.com/bncmn/0df.ca" title="source">source</a>
+  <div class="page">
+    <div class="source"><a href="https://github.com/bncmn/0df.ca" target="_blank" rel="noopener">source</a></div>
 
-  <main class="center">
-    <h1>Diego Buencamino</h1>
-    <p class="subtitle">software development, electronics repair, tech support</p>
-    <p class="location-time">vancouver, bc / <span id="clock">--:--:--</span></p>
-  </main>
+    <main class="main">
+      <div class="stack">
+        <h1 class="name">Diego Buencamino</h1>
+        <p class="subline">software development / electronics repair and testing / tech support</p>
+        <p class="wherewhen">vancouver, bc / <span id="clock">--:--:--</span></p>
+      </div>
+    </main>
 
-  <footer>
-    <div class="links">
-      <a href="https://www.linkedin.com/in/bncmn/" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/bncmn" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-      <a href="https://github.com/bncmn/bncmn/blob/main/resume.pdf" target="_blank" rel="noopener" title="Resume"><i class="fa-solid fa-file-lines"></i></a>
-    </div>
-  </footer>
+    <footer class="footer">
+      <div>reach out: <a href="mailto:dfbuencamino@gmail.com">dfbuencamino@gmail.com</a></div>
+      <div class="links">
+        <a href="https://www.linkedin.com/in/bncmn/" target="_blank" rel="noopener">linkedin</a>
+        /
+        <a href="https://github.com/bncmn" target="_blank" rel="noopener">github</a>
+        /
+        <a href="https://github.com/bncmn/bncmn/blob/main/resume.pdf" target="_blank" rel="noopener">resume</a>
+      </div>
+    </footer>
+  </div>
 
   <script>
     (function() {
-      const tz = 'America/Vancouver';
-      const api = `https://worldtimeapi.org/api/timezone/${tz}`;
-      const clockEl = document.getElementById('clock');
-      const center = document.querySelector('main.center');
-      const subtitle = document.querySelector('.subtitle');
-
-      let baseEpochMs = null; let syncedAtMs = null;
-
-      async function syncTime() {
+      const CLOCK_EL = document.getElementById('clock');
+      const ZONE = 'America/Vancouver';
+      const RESYNC_MS = 5 * 60 * 1000;
+      let baseTs = null;
+      let basePerf = null;
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function render(ts) {
+        const d = new Date(ts);
+        const hh = pad(d.getHours());
+        const mm = pad(d.getMinutes());
+        const ss = pad(d.getSeconds());
+        CLOCK_EL.textContent = `${hh}:${mm}:${ss}`;
+      }
+      async function syncNow() {
         try {
-          const res = await fetch(api, { cache: 'no-store' });
-          const data = await res.json();
-          baseEpochMs = typeof data.unixtime === 'number' ? data.unixtime * 1000
-                      : data.datetime ? Date.parse(data.datetime)
-                      : Date.now();
-          syncedAtMs = performance.now();
+          const url = `https://worldtimeapi.org/api/timezone/${encodeURIComponent(ZONE)}`;
+          const r = await fetch(url, { cache: 'no-store' });
+          if (!r.ok) throw new Error('time fetch failed');
+          const data = await r.json();
+          baseTs = new Date(data.datetime).getTime();
+          basePerf = performance.now();
+          render(baseTs);
         } catch (e) {
-          baseEpochMs = Date.now();
-          syncedAtMs = performance.now();
+          try {
+            const fmt = new Intl.DateTimeFormat('en-CA', { timeZone: ZONE, hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const now = new Date();
+            const parts = fmt.formatToParts(now);
+            const hh = parts.find(p => p.type === 'hour').value;
+            const mm = parts.find(p => p.type === 'minute').value;
+            const ss = parts.find(p => p.type === 'second').value;
+            CLOCK_EL.textContent = `${hh}:${mm}:${ss}`;
+            baseTs = Date.now();
+            basePerf = performance.now();
+          } catch (_) {
+            CLOCK_EL.textContent = 'time unavailable';
+          }
         }
       }
-
-      function formatHHMMSS(date) {
-        return new Intl.DateTimeFormat('en-CA', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: tz }).format(date);
-      }
-
       function tick() {
-        if (baseEpochMs == null || syncedAtMs == null) return;
-        const now = performance.now();
-        const elapsed = now - syncedAtMs; // ms since last sync
-        const internetNow = new Date(baseEpochMs + elapsed);
-        clockEl.textContent = formatHHMMSS(internetNow);
+        if (baseTs == null || basePerf == null) return;
+        const elapsed = performance.now() - basePerf;
+        render(baseTs + elapsed);
       }
-
-      function checkWrap() {
-        // If the subtitle's content overflows its line width, it's wrapped
-        const wrapped = subtitle.scrollWidth > subtitle.clientWidth;
-        center.classList.toggle('wrapped', wrapped);
-      }
-
-      syncTime();
-      setInterval(tick, 250);
-      setInterval(syncTime, 60 * 1000);
-
-      // handle wrapping detection
-      checkWrap();
-      addEventListener('resize', checkWrap);
-      // In case fonts load after first paint
-      document.fonts && document.fonts.ready && document.fonts.ready.then(checkWrap);
+      syncNow();
+      setInterval(tick, 1000);
+      setInterval(syncNow, RESYNC_MS);
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) syncNow();
+      });
     })();
   </script>
 </body>
